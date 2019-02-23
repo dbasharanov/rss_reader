@@ -4,7 +4,7 @@ class Feed < ApplicationRecord
 
   has_many :feed_items, dependent: :destroy
 
-  before_create :set_title, if: :is_valid_rss?
+  before_create :set_title, if: :valid_rss?
 
   validates :url, url: true, uniqueness: true
   #validates :title, presence: true
@@ -14,7 +14,7 @@ class Feed < ApplicationRecord
     open(url) do |rss|
       feed = RSS::Parser.parse(rss)
       feed.items.each do |item|
-        self.feed_items << FeedItem.create(title: item.title, link: item.link, pub_date: item.pubDate)
+        feed_items << FeedItem.create(title: item.title, link: item.link, pub_date: item.pubDate)
       end
     end 
   end
@@ -24,11 +24,11 @@ class Feed < ApplicationRecord
   def set_title
     open(url) do |rss|  
       feed = RSS::Parser.parse(rss)
-      self.title = feed.channel.title
+      title = feed.channel.title
     end
   end
 
-  def is_valid_rss?
+  def valid_rss?
     rss = begin
           true if RSS::Parser.parse(open(url))
         rescue
