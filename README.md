@@ -16,10 +16,12 @@ Things you may want to cover:
   rails 5.2.1
 ```
 ## Configuration
+```sh
   git clone git@github.com:dbasharanov/rss_reader.git # or clone your own fork
   cd rss_reader
   bundle
   bundle rails g foundation:install
+```
 
 
 ## Database creation
