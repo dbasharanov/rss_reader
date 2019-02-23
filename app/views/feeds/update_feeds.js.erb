@@ -1,0 +1,9 @@
+$('.icon-spinner').bind('ajax:success', function() {
+  $(this).addClass('loader');
+  setTimeout(function(){
+    //do what you need here
+    $("<%=j render(partial: 'items', object: @feed_items) %>").appendTo($(".infinite-table ul.list-items"));
+    $("li.feed_<%= params[:id]%> span").empty().append("(" + <%= @feed_items.count %> +")");
+    $('.icon-spinner').removeClass('loader');
+  }, 2000);
+});

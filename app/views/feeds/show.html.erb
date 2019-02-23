@@ -1,6 +1,7 @@
 <div class='small-12 title-wrapper'>
   <%= content_tag :h1, @feed.title, id: 'feedTitle' %>
   <span class='actions'>
+    <%= link_to '', "/update_feeds/#{@feed.id}", method: :post, remote: true, class: 'icon-spinner'%>
     <%= link_to '', edit_feed_path(@feed), class: 'icon-edit'%>
     <%= link_to '', @feed, method: :delete, class: 'delete-feed icon-bin'%>
   </span>
