@@ -4,12 +4,21 @@ class FeedsController < ApplicationController
   # GET /feeds
   # GET /feeds.json
   def index
-    @feeds = Feed.all
+    @feed_items = FeedItem.newest.page(params[:page]).per(10)
+    respond_to do |format|
+      format.html {  }
+      format.js {  }
+    end 
   end
 
   # GET /feeds/1
   # GET /feeds/1.json
   def show
+    @feed_items = @feed.feed_items.newest.page(params[:page]).per(10)
+    respond_to do |format|
+      format.html {  }
+      format.js { render :index }
+    end 
   end
 
   # GET /feeds/new
@@ -27,12 +36,13 @@ class FeedsController < ApplicationController
     @feed = Feed.new(feed_params)
 
     respond_to do |format|
-      if @feed.save
+      begin
+        @feed.save
+        @feed.fetch_feed_items
+
         format.html { redirect_to @feed, notice: 'Feed was successfully created.' }
-        format.json { render :show, status: :created, location: @feed }
-      else
-        format.html { render :new }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
+      rescue
+        format.html { render :new, notice: @feed.errors.full_messages.join(',')}
       end
     end
   end
@@ -43,10 +53,8 @@ class FeedsController < ApplicationController
     respond_to do |format|
       if @feed.update(feed_params)
         format.html { redirect_to @feed, notice: 'Feed was successfully updated.' }
-        format.json { render :show, status: :ok, location: @feed }
       else
         format.html { render :edit }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,7 +65,7 @@ class FeedsController < ApplicationController
     @feed.destroy
     respond_to do |format|
       format.html { redirect_to feeds_url, notice: 'Feed was successfully destroyed.' }
-      format.json { head :no_content }
+      format.js   { render layout: false }
     end
   end
 
@@ -69,6 +77,6 @@ class FeedsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def feed_params
-      params.require(:feed).permit(:title, :url)
+      params.require(:feed).permit(:url, :title)
     end
 end

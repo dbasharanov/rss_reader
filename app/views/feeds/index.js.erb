@@ -1,0 +1,9 @@
+// Append new data
+$("<%=j render(partial: 'items', object: @feed_items) %>").appendTo($(".infinite-table ul.list-items"));
+
+// Update pagination link
+<% if @feed_items.last_page? %>
+  $('.pagination').html("That's all, articles!");
+<% else %>
+  $('.pagination').html("<%=j link_to_next_page(@feed_items, '+ MORE', remote: true, class: 'small-12 button font-18') %>");
+<% end %>

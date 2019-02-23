@@ -1,6 +1,22 @@
 <h1>Editing Feed</h1>
 
-<%= render 'form', feed: @feed %>
+<div class='small-12'>
+  <%= form_with(model: @feed, local: true) do |form| %>
+    <% if @feed.errors.any? %>
+      <div id="error_explanation" class='callout alert'>
+        <p><%= pluralize(@feed.errors.count, "error") %> prohibited this feed from being saved:</p>
+        <ul>
+          <% @feed.errors.full_messages.each do |message| %>
+            <%= content_tag :li, message %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.text_field :title, placeholder: "Add New Feed URL", required: true %>
+    <%= form.submit 'Update', class: 'button primary hollow small-6'%>
+  <% end %>
+</div>
 
 <%= link_to 'Show', @feed %> |
 <%= link_to 'Back', feeds_path %>

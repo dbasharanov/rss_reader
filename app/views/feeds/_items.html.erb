@@ -1,0 +1,7 @@
+ <% items.each do |item| %>
+  <%= content_tag :li, class: "item-feed-#{item.feed_id}" do %>
+    <%= link_to(item.title, item.link, target: '_blank') %>
+    <%= content_tag :span, distance_of_time_in_words_to_now(item.pub_date), class: 'font-14' %>
+    <%= link_to '', item, method: :delete, remote: true, class: 'delete-item icon-close'%>
+  <% end %>
+<% end %>

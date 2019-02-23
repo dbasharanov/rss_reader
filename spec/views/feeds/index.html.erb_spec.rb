@@ -1,22 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "feeds/index", type: :view do
-  before(:each) do
-    assign(:feeds, [
-      Feed.create!(
-        :title => "Title",
-        :url => "https://www.investor.bg/bulletin/rss/"
-      ),
-      Feed.create!(
-        :title => "Title",
-        :url => "https://www.investor.bg/bulletin/rss/"
-      )
-    ])
-  end
+  it 'displays all feeds correctly' do
+    assign(:feed, Feed.new(title: 'Reuters: Sports News', url: "http://feeds.reuters.com/reuters/sportsNews"))
+    assign(:feed_items, Kaminari.paginate_array([FeedItem.create(title: 'Shirt', link: "http://feeds.reuters.com/reuters/sportsNews", pub_date: Time.now - 2.hours, id: '222')]).page(params[:page]).per(10))
 
-  it "renders a list of feeds" do
     render
-    assert_select "tr>td", :text => "Title".to_s, :count => 2
-    assert_select "tr>td", :text => "Url".to_s, :count => 2
+
+    rendered.should have_selector("input")
+    rendered.should have_selector("a.delete-item")
+    rendered.should have_selector("ul li:first-child a", text: 'Shirt')
+    rendered.should have_selector("ul li:first-child span", text: '2 hours')
   end
 end

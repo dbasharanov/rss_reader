@@ -19,20 +19,22 @@
         <%= render partial: 'layouts/shared/offcanvas_menu' %>
         <div class="off-canvas-content" data-off-canvas-content>
           <%= render partial: 'layouts/shared/header' %>
-            <% if flash.any? %>
-              <div class='row column'>
-                <% flash.each do |name, msg| %>
-                  <%= content_tag(:div, content_tag(:div, content_tag(:div, msg)), class: 'small-12 column flash-messages') %>
-                <% end %>    
-              </div>
-            <% end %>
             <div id="content" class='small-12'>
               <aside class='large-2 medium-3 float-left show-for-medium'>
-                <ul class='no-bullet'>
-                  <%= render partial: 'layouts/shared/feed_list' %>
+                <ul class='no-bullet main-menu'>
+                  <%= render partial: 'layouts/shared/main_menu' %>
                 </ul>
               </aside>
-              <%= content_tag :div, yield, class: 'content-wrapper small-offset-1 small-10 medium-offset-4 medium-6' %>
+              <div class='content-wrapper small-offset-1 small-10 medium-offset-4 medium-6'>
+                  <% if flash.any? %>
+                    <div class='row'>
+                      <% flash.each do |name, msg| %>
+                        <%= content_tag :div, msg, class: 'small-12 callout font-16 strong' %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                <%= yield %>
+              </div>
             </div>
           </div>
         </div>

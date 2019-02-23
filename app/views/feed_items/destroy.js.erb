@@ -1,0 +1,4 @@
+$('.delete-item').bind('ajax:success', function() {
+   $(this).closest('li').fadeOut();
+   $("li.feed_<%= @id%> span").empty().append("(" + <%= Feed.find(@id).feed_items_count%> +")");
+});

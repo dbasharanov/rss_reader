@@ -35,6 +35,9 @@ gem 'validate_url'
 gem 'foundation-rails', '6.4.3.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+gem 'kaminari'
+gem 'jquery-infinite-pages'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

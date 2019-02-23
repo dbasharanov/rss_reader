@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require rails-ujs
+//= require jquery.infinite-pages
 //= require foundation
 //= require activestorage
 //= require_tree .

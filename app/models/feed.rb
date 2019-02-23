@@ -2,21 +2,40 @@ class Feed < ApplicationRecord
   require 'rss'
   require 'open-uri'
 
-  before_create :set_title
+  has_many :feed_items, dependent: :destroy
 
-  #validates :url, format: URI::regexp(/(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix)
-  validates :url, url: true
-  
+  before_create :set_title, if: :is_valid_rss?
+
+  validates :url, url: true, uniqueness: true
+  #validates :title, presence: true
 
 
+  def fetch_feed_items
+    open(url) do |rss|
+      feed = RSS::Parser.parse(rss)
+      feed.items.each do |item|
+        self.feed_items << FeedItem.create(title: item.title, link: item.link, pub_date: item.pubDate)
+      end
+    end 
+  end
 
   private 
 
   def set_title
-    open(url) do |rss|
+    open(url) do |rss|  
       feed = RSS::Parser.parse(rss)
       self.title = feed.channel.title
     end
   end
+
+  def is_valid_rss?
+    rss = begin
+          true if RSS::Parser.parse(open(url))
+        rescue
+          errors.add(:base, "RSS not well formed")
+          false
+        end
+  end 
+
 
 end

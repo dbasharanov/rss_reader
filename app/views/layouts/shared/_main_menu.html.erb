@@ -1,0 +1,9 @@
+<%= content_tag :li, link_to('All feeds', feeds_path), class: "#{'selected' if params[:action] == 'index' }" %>
+<% @feeds.each do |feed| %>
+  <%= content_tag :li, class: "feed_#{feed.id} #{'selected' if params[:id] == feed.id.to_s }" do %>
+    <%= link_to feed_path(feed) do %>
+      <%= content_tag :span, "(#{feed.feed_items.size})"%>
+      <%= feed.title %>
+    <% end %>
+  <% end %>
+<% end %>

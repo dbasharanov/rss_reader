@@ -75,9 +75,9 @@ $foundation-palette: (
   warning: #ffae00,
   alert: #cc4b37,
 );
-$light-gray: #9b9b9b;
-$medium-gray: #dddddd;
-$dark-gray: #4d4d4d;
+$light-gray: #f3f3f3;
+$medium-gray: #e1e1e1;
+$dark-gray: #aeaeae;
 $black: #444444;
 $white: #ffffff;
 $body-background: $white;
@@ -319,7 +319,7 @@ $callout-margin: 0 0 1rem 0;
 $callout-padding: 1rem;
 $callout-font-color: $body-font-color;
 $callout-font-color-alt: $body-background;
-$callout-radius: $global-radius;
+$callout-radius: 5px;
 $callout-link-tint: 30%;
 
 // 14. Card
@@ -359,9 +359,9 @@ $closebutton-color-hover: $black;
 
 $drilldown-transition: transform 0.15s linear;
 $drilldown-arrows: true;
-$drilldown-padding: 10px;
+$drilldown-padding: 15px;
 $drilldown-nested-margin: 0;
-$drilldown-background: $white;
+$drilldown-background: #eff1f3;
 $drilldown-submenu-padding: $drilldown-padding;
 $drilldown-submenu-background: $white;
 $drilldown-arrow-color: $black;

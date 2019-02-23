@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_20_084236) do
+ActiveRecord::Schema.define(version: 2019_02_22_145638) do
+
+  create_table "feed_items", force: :cascade do |t|
+    t.integer "feed_id"
+    t.string "title"
+    t.string "link"
+    t.datetime "pub_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_feed_items_on_feed_id"
+  end
 
   create_table "feeds", force: :cascade do |t|
     t.string "title"
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "feed_items_count"
   end
 
 end

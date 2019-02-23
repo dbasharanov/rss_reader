@@ -1,14 +1,16 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @feed.title %>
+<div class='small-12 title-wrapper'>
+  <%= content_tag :h1, @feed.title, id: 'feedTitle' %>
+  <span class='actions'>
+    <%= link_to '', edit_feed_path(@feed), class: 'icon-edit'%>
+    <%= link_to '', @feed, method: :delete, class: 'delete-feed icon-bin'%>
+  </span>
+</div>
+<%#= link_to 'X', @feed, method: :delete, remote: true, class: 'delete-feed'%>
+<div class="infinite-table">
+  <%= content_tag :ul, class: 'no-bullet font-18 list-items', id: 'feeds' do %>
+    <%= render partial: 'items', object: @feed_items %>
+  <% end %>
+</div>
+<p class="pagination">
+  <%= link_to_next_page(@feed_items, '+ MORE', remote: true, class: 'small-12 button font-18') %>
 </p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @feed.url %>
-</p>
-
-<%= link_to 'Edit', edit_feed_path(@feed) %> |
-<%= link_to 'Back', feeds_path %>
